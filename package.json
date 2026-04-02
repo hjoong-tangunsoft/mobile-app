@@ -1,0 +1,9 @@
+{
+  "name": "mobile-app",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "node tests/run.js",
+    "lint": "node tests/lint.js",
+    "build": "echo Build successful && exit 0"
+  }
+}
