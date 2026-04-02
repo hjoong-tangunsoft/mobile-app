@@ -61,19 +61,13 @@ jobs:
           RUN="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           COMMIT="${{ github.event.head_commit.url }}"
 
-          read -r -d '' COMMENT << 'ENDCOMMENT'
-          ## ✅ CI/CD Pipeline 통과
-
-          | 항목 | 내용 |
-          |------|------|
-          ENDCOMMENT
-
           COMMENT="## ✅ CI/CD Pipeline 통과\n\n| 항목 | 내용 |\n|------|------|\n| **Commit** | [\`${SHORT}\`](${COMMIT}) |\n| **Pipeline** | [Run #${{ github.run_number }}](${RUN}) |\n| **Build** | ✅ Pass |\n| **Test** | ✅ Pass |\n| **Lint** | ✅ Pass |\n\n> 🤖 GitHub Actions CI/CD 파이프라인 결과입니다."
 
-          curl -s -X POST \
+          curl -sf -X POST \
             -H "Authorization: Bearer ${{ secrets.YOUTRACK_TOKEN }}" \
             -H "Content-Type: application/json" \
             "https://tangunsoft.youtrack.cloud/api/issues/${ISSUE_ID}/comments" \
             -d "{\"text\": \"${COMMENT}\"}"
 
+          echo ""
           echo "Posted to YouTrack: ${ISSUE_ID}"
